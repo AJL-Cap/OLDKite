@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import fire from './fire'
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import fire from "./fire";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Routes from "./components/Routes";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Routes />
+        {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -19,9 +25,8 @@ function App() {
         >
           Learn React
         </a>
-      </header>
-    </div>
+      </header> */}
+      </div>
+    </Router>
   );
 }
-
-export default App;
