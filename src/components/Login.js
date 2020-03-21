@@ -7,11 +7,14 @@ export default function Login(props) {
 
   const onSubmit = data => {
     console.log(data);
-    fire.auth().signInWithEmailAndPassword(data.email, data.password);
+    fire.auth().signInWithEmailAndPassword(data.email, data.password)
+    .catch(err => {
+      alert(err.message)
+    })
     props.history.push('/')
   };
 
-  //need to display error for wrong email & password combi
+  //need to display error for wrong email & password combination
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input type="email" placeholder="email" name="email" ref={register} />

@@ -7,6 +7,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 export default function Navbar() {
   const [user, initialising, error] = useAuthState(fire.auth());
 
+  const signOut = () => {
+    fire.auth().signOut()
+  }
   return (
     <div>
       {user ? (
@@ -14,7 +17,7 @@ export default function Navbar() {
           <Link to="/">Home</Link>
           <Link to="/players">Players</Link>
           <Link to="/profile">Profile</Link>
-          <button onClick={()=>fire.auth().signOut()}>Sign out</button>
+          <button onClick={signOut}>Sign out</button>
         </div>
       ) : (
         <div>

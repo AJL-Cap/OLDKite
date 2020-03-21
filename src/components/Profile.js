@@ -6,7 +6,7 @@ import fire from "../fire";
 
 export default function Profile({ userId }) {
   const playerRef = fire.database().ref(`players/${userId}`);
-
+console.log(userId)
   const [player, loading, err] = useObject(playerRef);
 
   if (loading) {
@@ -22,6 +22,8 @@ export default function Profile({ userId }) {
         <div>Total Points: {player.val().totalPoints}</div>
         <div>Total Wins: {player.val().wins}</div>
         <div>Total Games: {player.val().totalGamesPlayed}</div>
+       <img src={player.val().profilePic} alt=""/>
+
       </div>
     );
   }

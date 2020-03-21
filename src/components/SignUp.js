@@ -8,11 +8,21 @@ export default function SignUp(props) {
 
   const [signupErr, setSignupErr] = useState(null);
 
+  const [image, setImage] = useState(null)
+
+  const handleImage = (evt) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImage(reader.result)
+    };
+    reader.readAsDataURL(evt.target.files[0]);
+  }
+
   const onSubmit = data => {
     console.log(data);
     fire.auth().createUserWithEmailAndPassword(data.email, data.password)
       .then(promise => {
-        fire.database().ref(`players/${promise.user.uid}`).set({"nickname": data.nickname, "total games played": 0, "totalPoints": 0, "wins": 0})
+        fire.database().ref(`players/${promise.user.uid}`).set({"nickname": data.nickname, "totalGamesPlayed": 0, "totalPoints": 0, "wins": 0, "profilePic": image})
         props.history.push("/");
       })
       .catch(err => {
@@ -51,6 +61,15 @@ export default function SignUp(props) {
         placeholder="Game lover"
         name="nickname"
         ref={register}
+      />
+
+      <label htmlFor="profilePic">Profile Picture</label>
+      <input
+        type="file"
+        placeholder="upload a picture"
+        name="profilePic"
+        ref={register}
+        onChange={handleImage}
       />
       <input type="submit" />
     </form>
