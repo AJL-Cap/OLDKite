@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { useAuthState } from "react-firebase-hooks/auth";
 import fire from "../fire";
 
 export default function SignUp(props) {

@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useObject, useObjectVal } from "react-firebase-hooks/database";
+import React from "react";
+import { useObjectVal } from "react-firebase-hooks/database";
 import fire from "../fire";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Home({ userId }) {
   const [player, loading, error] = useObjectVal(

@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useObject, useObjectVal } from "react-firebase-hooks/database";
-import { useForm } from "react-hook-form";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React from "react";
+import { useObjectVal } from "react-firebase-hooks/database";
 import fire from "../fire";
 
 export default function Profile({ userId }) {
