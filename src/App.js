@@ -1,32 +1,19 @@
-import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import fire from "./fire";
+import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import NavigationBar from "./components/NavigationBar";
 import Routes from "./components/Routes";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Layout from "./components/Layout";
 
 export default function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <Routes />
-        {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      </div>
-    </Router>
+    <React.Fragment>
+      <NavigationBar />
+      <Layout>
+        <Router>
+          <Routes />
+        </Router>
+      </Layout>
+    </React.Fragment>
   );
 }

@@ -27,7 +27,6 @@ export default function Routes() {
     );
   }
 
-  //perhaps limit certain routes to logged in users (vs guests?)
   return (
     <Switch>
       {user ? (

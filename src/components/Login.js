@@ -6,21 +6,22 @@ export default function Login(props) {
   const { register, handleSubmit, watch, errors } = useForm();
 
   const onSubmit = data => {
-    console.log(data);
     fire.auth().signInWithEmailAndPassword(data.email, data.password)
     .catch(err => {
-      alert(err.message)
-    })
-    props.history.push('/')
+      alert(err.message);
+      });
+    props.history.push("/");
   };
 
   //need to display error for wrong email & password combination
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="email" placeholder="email" name="email" ref={register} />
+      <h1>Log In</h1>
+      <label htmlFor="email">Email</label>
+      <input type="email" name="email" ref={register} />
+      <label htmlFor="password">Password</label>
       <input
         type="password"
-        placeholder="password"
         name="password"
         ref={register({ required: true, minLength: 6 })}
       />

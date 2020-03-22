@@ -6,6 +6,7 @@ import fire from "../fire";
 export default function SignUp(props) {
   const { register, handleSubmit, errors } = useForm();
 
+  //thinking of using this for displaying error..:
   const [signupErr, setSignupErr] = useState(null);
 
   const [image, setImage] = useState(null)
@@ -27,38 +28,35 @@ export default function SignUp(props) {
       })
       .catch(err => {
         alert(err.message);
-        //figure out how to display the error on render
+        //for now, using alert. but need to figure out how to display err.message on render instead
         props.history.push("/signUp");
       });
   };
 
-  //need to disaply error message for existing email
-
+  //remember: need to disaply error message for existing email or invalid email format
   return (
-    //for registeration only
     <form onSubmit={handleSubmit(onSubmit)}>
+      <h1>Sign Up</h1>
       <label htmlFor="email">Email</label>
       <input
         type="text"
-        placeholder="Email"
         name="email"
         ref={register({ required: true, pattern: /^\S+@\S+$/i })}
       />
-      {errors.email && "This field is required"}
+      {errors.email && <p>This field is required</p>}
 
       <label htmlFor="password">Password</label>
       <input
         type="text"
-        placeholder="Password"
         name="password"
         ref={register({ required: true, minLength: 6 })}
       />
-      {errors.password && "Must be at least 6 characters long"}
+      {errors.password && <p>Must be at least 6 characters long</p>}
 
       <label htmlFor="nickname">Nickname</label>
       <input
         type="text"
-        placeholder="Game lover"
+        placeholder="Ex: Game lover"
         name="nickname"
         ref={register}
       />
@@ -75,5 +73,3 @@ export default function SignUp(props) {
     </form>
   );
 }
-
-// auth.createUserWithEmailAndPassword(email, pass)
