@@ -1,25 +1,25 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 import fire from './fire'
+import { useList } from 'react-firebase-hooks/database'
+import GameCard from './components/GameCard';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-function App() {
+const db = fire.database()
+const gamesRef = db.ref("games")
+
+const App = () => {
+
+  const [games, loading, error] = useList(gamesRef);
+
+  if (loading) return <p>Loading</p>;
+  if (error) return <p>Error</p>;
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="jumbotron text-center" >
+        <h1>Games 🌬🪁🌤 </h1>
+      </div>
+      {games.map(game => <GameCard key={game.key} gameRef={game.ref} />)}
     </div>
   );
 }
