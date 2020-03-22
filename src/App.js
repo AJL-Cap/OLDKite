@@ -1,15 +1,19 @@
-import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import fire from "./fire";
-import WaitingRoom from "./WaitingRoom";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import NavigationBar from "./components/NavigationBar";
+import Routes from "./components/Routes";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Layout from "./components/Layout";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <WaitingRoom />
-    </div>
+    <React.Fragment>
+      <NavigationBar />
+      <Layout>
+        <Router>
+          <Routes />
+        </Router>
+      </Layout>
+    </React.Fragment>
   );
 }
-
-export default App;
