@@ -1,43 +1,64 @@
 import React from "react";
 import fire from "../fire";
-import { useList, useObject, useListKeys } from "react-firebase-hooks/database";
-import { Redirect } from "react-router-dom";
+import { useObjectVal } from "react-firebase-hooks/database";
+import SessionPlayers from "./sessionPlayers";
 
 const db = fire.database();
 const gameSessions = db.ref("gameSessions");
+
 const WaitingRoom = props => {
-  // console.log(props.match.params);
-  const [sessionSnapshot, sessionloading, sessionError] = useListKeys(
-    gameSessions.child(props.match.params.sessionId).child("players")
+  //getting that session info
+  const [sessionSnapshot, sessionLoading, sessionError] = useObjectVal(
+    gameSessions.child(props.match.params.sessionId)
   );
-  if (sessionloading) return "loading";
+  if (sessionLoading) return "loading";
+  if (sessionError) return "Error";
+  if (!sessionSnapshot) return "This game doesn't exist";
+  //back to lobby button functionality if a user is trying to access a game they're not in.
   const backToLobby = () => {
     props.history.push("/games");
   };
-  const handleClick = evt => {
-    evt.preventDefault();
-    //change game status to in progress and redirect to playing Game Component
+  const handleClick = () => {
+    //updating that session status to playing
+    gameSessions
+      .child(props.match.params.sessionId)
+      .update({ status: "playing" }, function(err) {
+        //still need send to the playing game component
+        //error handling
+        if (err) console.log("error switching game to playing");
+        else console.log("success");
+      });
   };
-  return sessionSnapshot.includes(props.userId) ? (
-    <div>
-      <div>
-        <h1>Waiting for more players!</h1>
-      </div>
-      <div>
-        <h3>Players:</h3>
-        {/* iterate through players to display them */}
-      </div>
-      <div>
-        <button onClick={handleClick}> Start Game </button>
-      </div>
-    </div>
-  ) : (
+  //getting players from the session
+  let players = Object.keys(sessionSnapshot.players);
+
+  return (
     <>
-      <h2>
-        YOU ARE NOT IN THIS GAME. CLICK THIS BUTTON TO HOST A GAME OR ENTER A
-        DIFFERENT ROOM CODE!
-      </h2>
-      <button onClick={backToLobby}>Return To Lobby</button>
+      {players.includes(`${props.userId}`) ? (
+        <div>
+          <div>
+            <h1>Waiting for more players!</h1>
+            <h2>{`Give your friends this code to invite them to your game: ${sessionSnapshot.sessionCode}`}</h2>
+          </div>
+          <div>
+            <h3>Players:</h3>
+            {players.map(player => (
+              <SessionPlayers player={player} key={player} />
+            ))}
+          </div>
+          <div>
+            <button onClick={handleClick}> Start Game </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <h2>
+            YOU ARE NOT IN THIS GAME. CLICK THIS BUTTON TO HOST A GAME OR ENTER
+            A DIFFERENT ROOM CODE!
+          </h2>
+          <button onClick={backToLobby}>Return To Lobby</button>
+        </>
+      )}
     </>
   );
 };
