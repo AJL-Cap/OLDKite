@@ -35,7 +35,10 @@ export default function NavigationBar() {
               <Nav.Item>
                 <Nav.Link href="/players">Players</Nav.Link>
               </Nav.Item>
-              <button onClick={signOut}>Sign out</button>
+              <Nav.Item>
+                <Nav.Link href="/games">Games</Nav.Link>
+              </Nav.Item>
+              <button className='btn btn-secondary' onClick={signOut}>Sign out</button>
             </Nav>
           ) : (
             <Nav className="ml-auto">

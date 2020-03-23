@@ -9,7 +9,7 @@ const GameCard = props => {
   if (error) return <p>Error</p>;
 
   return (
-    <div className="card" style={{ width: '40%', margin: "5%" }} >
+    <div className="card" style={{ margin: "5%" }} >
       <div className="card-body" >
         <h2 className="card-title">title: {game.val().title}</h2>
         <p className="card-text">rules: {game.val().rules}</p>
