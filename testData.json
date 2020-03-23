@@ -10,24 +10,24 @@
       "nickname": "Lizzy",
       "totalPoints" : 2392,
       "wins": 10,
-      "total games played": 11
+      "totalGamesPlayed": 11
     },
     "UID2": {
       "nickname": "Ji",
       "totalPoints" : 5,
       "wins": 1,
-      "total games played": 1
+      "totalGamesPlayed": 1
     },
     "UID3": {
       "nickname": "Anna",
       "totalPoints": 0,
       "wins": 1,
-      "total games played": 1
+      "totalGamesPlayed": 1
     }
   },
   "gameSessions": {
     "sessionID1" : {
-      "sessionCode": "GAME",
+      "code": "GAME",
       "players": {
         "UID1": {
           "points" : 0,
