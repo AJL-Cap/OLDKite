@@ -9,6 +9,7 @@ import Players from "./Players";
 import Home from "./Home";
 import Profile from "./Profile";
 import WaitingRoom from "./WaitingRoom";
+import NotFound from "./NotFound";
 
 export default function Routes() {
   const [user, initialising, error] = useAuthState(fire.auth());
@@ -54,6 +55,7 @@ export default function Routes() {
           <Route path="/signup" component={SignUp} />
         </Switch>
       )}
+      <Route component={NotFound} />
     </Switch>
   );
 }

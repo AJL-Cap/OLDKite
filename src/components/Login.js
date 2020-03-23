@@ -6,9 +6,11 @@ export default function Login(props) {
   const { register, handleSubmit, watch, errors } = useForm();
 
   const onSubmit = data => {
-    fire.auth().signInWithEmailAndPassword(data.email, data.password)
-    .catch(err => {
-      alert(err.message);
+    fire
+      .auth()
+      .signInWithEmailAndPassword(data.email, data.password)
+      .catch(err => {
+        alert(err.message);
       });
     props.history.push("/");
   };

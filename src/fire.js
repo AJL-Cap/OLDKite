@@ -1,4 +1,4 @@
 import firebase from "firebase";
-import firebaseConfig from "./secrets";
-const fire = firebase.initializeApp(firebaseConfig);
+import fbConfig from "./secrets";
+const fire = firebase.initializeApp(fbConfig);
 export default fire;
