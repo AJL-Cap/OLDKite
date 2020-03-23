@@ -9,28 +9,30 @@ const gameSessions = db.ref("gameSessions");
 const WaitingRoom = props => {
   //getting that session info
   const [sessionSnapshot, sessionLoading, sessionError] = useObjectVal(
-    gameSessions.child(props.match.params.sessionId)
+    gameSessions
+      .orderByChild("sessionCode")
+      .equalTo(props.match.params.gameCode)
   );
+
   if (sessionLoading) return "loading";
   if (sessionError) return "Error";
   if (!sessionSnapshot) return "This game doesn't exist";
+  let session = Object.keys(sessionSnapshot);
   //back to lobby button functionality if a user is trying to access a game they're not in.
   const backToLobby = () => {
     props.history.push("/games");
   };
   const handleClick = () => {
     //updating that session status to playing
-    gameSessions
-      .child(props.match.params.sessionId)
-      .update({ status: "playing" }, function(err) {
-        //still need send to the playing game component
-        //error handling
-        if (err) console.log("error switching game to playing");
-        else console.log("success");
-      });
+    gameSessions.child(session[0]).update({ status: "playing" }, function(err) {
+      //still need send to the playing game component
+      //error handling
+      if (err) console.log("error switching game to playing");
+      else console.log("success");
+    });
   };
   //getting players from the session
-  let players = Object.keys(sessionSnapshot.players);
+  let players = Object.keys(sessionSnapshot[session].players);
 
   return (
     <>
@@ -38,7 +40,7 @@ const WaitingRoom = props => {
         <div>
           <div>
             <h1>Waiting for more players!</h1>
-            <h2>{`Give your friends this code to invite them to your game: ${sessionSnapshot.sessionCode}`}</h2>
+            <h2>{`Give your friends this code to invite them to your game: ${sessionSnapshot[session].sessionCode}`}</h2>
           </div>
           <div>
             <h3>Players:</h3>

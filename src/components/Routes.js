@@ -43,7 +43,7 @@ export default function Routes() {
             render={props => <Profile userId={user.uid} {...props} />}
           />
           <Route
-            path="/games/:sessionId"
+            path="/games/:gameCode"
             render={props => <WaitingRoom userId={user.uid} {...props} />}
           />
         </Switch>
