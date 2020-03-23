@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import fire from "../fire";
 
 export default function Login(props) {
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = data => {
     fire.auth().signInWithEmailAndPassword(data.email, data.password)

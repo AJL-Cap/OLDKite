@@ -7,7 +7,7 @@ export default function SignUp(props) {
   const { register, handleSubmit, errors } = useForm();
 
   //thinking of using this for displaying error..:
-  const [signupErr, setSignupErr] = useState(null);
+  //const [signupErr, setSignupErr] = useState(null);
 
   const [image, setImage] = useState(null)
 
