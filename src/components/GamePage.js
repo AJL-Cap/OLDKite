@@ -9,7 +9,6 @@ import firebase from 'firebase'
 
 const db = fire.database()
 const gamesRef = db.ref("games")
-const sessionRef = db.ref("gameSessions")
 
 const GamePage = props => {
   const [user, loadingUser, errorUser] = useAuthState(firebase.auth());
@@ -25,8 +24,8 @@ const GamePage = props => {
       </div>
       <Container fluid>
         <Row>
-          <Col>{games.map(game => <GameCard key={game.key} gameRef={game.ref} sessionRef={sessionRef} uid={user.uid} history={props.history} />)}</Col>
-          <Col><RoomCodeForm sessionRef={sessionRef} uid={user.uid} history={props.history} /></Col>
+          <Col>{games.map(game => <GameCard key={game.key} gameRef={game.ref} gameId={game.key} uid={user.uid} history={props.history} />)}</Col>
+          <Col><RoomCodeForm uid={user.uid} history={props.history} /></Col>
         </Row>
       </Container>
     </div>

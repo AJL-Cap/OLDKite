@@ -1,15 +1,21 @@
 import React from 'react';
 import { useObject } from 'react-firebase-hooks/database'
+import fire from '../fire'
+import makeRoomCode from '../roomCodes'
+
+const db = fire.database()
 
 const GameCard = props => {
-  const { gameRef, sessionRef, uid, history } = props
+  const { gameRef, gameId, uid, history } = props
   const [game, loading, error] = useObject(gameRef);
+  const code = makeRoomCode()
 
   if (loading) return <p>Loading</p>;
   if (error) return <p>Error</p>;
 
   const handleClick = () => {
-
+    db.ref("gameSessions").push({code: code, gameId: gameId, status: "waiting", players: {[uid]: {host: true}}})
+    history.push(`/games/${gameId}/${code}`)
   }
 
   return (

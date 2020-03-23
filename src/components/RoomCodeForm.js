@@ -1,19 +1,27 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useObject } from 'react-firebase-hooks/database'
+import fire from '../fire'
+
+const db = fire.database()
 
 const RoomCodeForm = (props) => {
-  const {sessionRef, uid, history} = props
+  const { uid, history } = props
   const { register, handleSubmit, errors } = useForm()
-  const [session, loading, error] = useObject(sessionRef.orderByChild('code').equalTo('GAME'))
+  const [session, loading, error] = useObject(db.ref("gameSessions").orderByChild('code').equalTo('GAME'))
 
   if (loading) return <div>...</div>
 
-  let { code, players, gameId } = Object.values(session.val())[0]
+  const room = Object.entries(session.val())[0]
+  const key = room[0]
+  const { code, players, gameId } = room[1]
+  const playerCopy = {...players}
+
+  const sessionRef = db.ref("gameSessions/" + key + "/players")
 
   const onSubmit = data => {
     if (data.code == code) {
-      players = {...players, [uid]: {points: 0}}
+      sessionRef.set({...playerCopy, [uid]: {points: 0}})
     }
     history.push(`/games/${gameId}/${code}`)
   };
