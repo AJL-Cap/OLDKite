@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import fire from "../fire";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Nav, Navbar } from "react-bootstrap";
-import styled from "styled-components";
 
 export default function NavigationBar() {
   const [user, initialising, error] = useAuthState(fire.auth());
@@ -12,19 +11,16 @@ export default function NavigationBar() {
     fire.auth().signOut();
   };
 
-  if (initialising) {
+  if (initialising || error) {
     return (
-      <Styles>
       <Navbar expand="lg">
         <Navbar.Brand href="/">Kite</Navbar.Brand>
       </Navbar>
-    </Styles>
     )
   }
 
   return (
-    <Styles>
-      <Navbar expand="lg">
+      <Navbar expand="lg" style={{backgroundColor: '#ddd'}} >
         <Navbar.Brand href="/">Kite</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -39,7 +35,10 @@ export default function NavigationBar() {
               <Nav.Item>
                 <Nav.Link href="/players">Players</Nav.Link>
               </Nav.Item>
-              <button onClick={signOut}>Sign out</button>
+              <Nav.Item>
+                <Nav.Link href="/games">Games</Nav.Link>
+              </Nav.Item>
+              <button className='btn btn-secondary' onClick={signOut}>Sign out</button>
             </Nav>
           ) : (
             <Nav className="ml-auto">
@@ -56,21 +55,5 @@ export default function NavigationBar() {
           )}
         </Navbar.Collapse>
       </Navbar>
-    </Styles>
   );
 }
-
-const Styles = styled.div`
-  .navbar {
-    background-color: #222;
-  }
-
-  .navbar-brand,
-  .navbar-nav .nav-link {
-    color: #bbb;
-
-    &:hover {
-      color: white;
-    }
-  }
-`;

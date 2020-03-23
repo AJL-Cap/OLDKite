@@ -27,7 +27,7 @@
   },
   "gameSessions": {
     "sessionID1" : {
-      "sessionCode": "GAME",
+      "code": "GAME",
       "players": {
         "UID1": {
           "points" : 0,

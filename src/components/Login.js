@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import fire from "../fire";
 
 export default function Login(props) {
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const [loginErr, setLoginErr] = useState(null)
 
