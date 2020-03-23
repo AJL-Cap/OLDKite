@@ -15,7 +15,7 @@ const GameCard = props => {
 
   const handleClick = () => {
     db.ref("gameSessions").push({code: code, gameId: gameId, status: "waiting", players: {[uid]: {host: true}}})
-    history.push(`/games/${gameId}/${code}`)
+    history.push(`/games/${code}`)
   }
 
   return (
