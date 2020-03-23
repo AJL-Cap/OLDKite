@@ -1,5 +1,5 @@
 import React from "react";
-import { useObjectVal } from "react-firebase-hooks/database";
+import { useObject } from "react-firebase-hooks/database";
 import fire from "../fire";
 import { Card } from "react-bootstrap";
 
@@ -7,10 +7,10 @@ const db = fire.database();
 const playerRef = db.ref("players");
 
 const SessionPlayer = props => {
-  const [playerSnapshot, playerLoading, playerError] = useObjectVal(
+  const [playerSnapshot, playerLoading, playerError] = useObject(
     playerRef.child(props.player)
   );
-  if (playerLoading) return "Loading";
+  if (playerLoading) return "";
   if (playerError) return "Error";
   return (
     <div className="m-3">
@@ -21,7 +21,7 @@ const SessionPlayer = props => {
           <Card.Img variant="top" src="" />
         )}
         <Card.Body>
-          <Card.Title>{playerSnapshot.nickname}</Card.Title>
+          <Card.Title>{playerSnapshot.val().nickname}</Card.Title>
         </Card.Body>
       </Card>
     </div>

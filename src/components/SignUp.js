@@ -7,29 +7,39 @@ export default function SignUp(props) {
 
   const [signupErr, setSignupErr] = useState(null);
 
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
 
-  const handleImage = (evt) => {
+  const handleImage = evt => {
     const reader = new FileReader();
     reader.onload = () => {
-      setImage(reader.result)
+      setImage(reader.result);
     };
     reader.readAsDataURL(evt.target.files[0]);
-  }
+  };
 
   const onSubmit = data => {
-    console.log(data);
-    fire.auth().createUserWithEmailAndPassword(data.email, data.password)
+    fire
+      .auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
       .then(promise => {
-        fire.database().ref(`players/${promise.user.uid}`).set({"nickname": data.nickname, "totalGamesPlayed": 0, "totalPoints": 0, "wins": 0, "profilePic": image})
+        fire
+          .database()
+          .ref(`players/${promise.user.uid}`)
+          .set({
+            nickname: data.nickname,
+            totalGamesPlayed: 0,
+            totalPoints: 0,
+            wins: 0,
+            profilePic: image
+          });
         props.history.push("/");
       })
       .catch(err => {
-        setSignupErr(err.message)
+        setSignupErr(err.message);
       });
   };
 
-  if (signupErr) return <h1>{signupErr}</h1>
+  if (signupErr) return <h1>{signupErr}</h1>;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

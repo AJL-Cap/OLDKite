@@ -7,10 +7,10 @@ import SignUp from "./SignUp";
 import Players from "./Players";
 import Home from "./Home";
 import Profile from "./Profile";
-import GamePage from "./GamePage"
-import Lobby from "./Lobby"
+import GamePage from "./GamePage";
 import WaitingRoom from "./WaitingRoom";
 import NotFound from "./NotFound";
+import Loading from "./Loading";
 
 export default function Routes() {
   const [user, initialising, error] = useAuthState(fire.auth());
@@ -18,7 +18,7 @@ export default function Routes() {
   if (initialising) {
     return (
       <div>
-        <p>loading...</p>
+        <Loading />
       </div>
     );
   }
@@ -34,12 +34,21 @@ export default function Routes() {
     <Switch>
       {user ? (
         <Switch>
-          <Route exact path="/" render={props => <Home userId={user.uid} {...props} />} />
+          <Route
+            exact
+            path="/"
+            render={props => <Home userId={user.uid} {...props} />}
+          />
           <Route path="/players" component={Players} />
-          <Route path="/profile" render={props => <Profile userId={user.uid} {...props} />} />
-          <Route path="/games/:gameId/:sessionId" component={Lobby} />
-          <Route path="/games/:gameCode" render={props => <WaitingRoom userId={user.uid} {...props} />} />
-          <Route path="/games" component={GamePage} />
+          <Route
+            path="/profile"
+            render={props => <Profile userId={user.uid} {...props} />}
+          />
+          <Route exact path="/games" component={GamePage} />
+          <Route
+            path="/games/:code"
+            render={props => <WaitingRoom userId={user.uid} {...props} />}
+          />
         </Switch>
       ) : (
         <Switch>

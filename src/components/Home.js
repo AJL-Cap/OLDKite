@@ -7,7 +7,7 @@ export default function Home({ userId }) {
     fire.database().ref(`players/${userId}`)
   );
 
-  if (loading) return <p>loading...</p>;
+  if (loading) return "";
   if (error) return <p>Error!</p>;
 
   return (

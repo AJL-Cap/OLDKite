@@ -8,7 +8,7 @@ export default function Profile({ userId }) {
   const [player, loading, err] = useObjectVal(playerRef);
 
   if (loading) {
-    return <div>loading...</div>;
+    return "";
   }
   if (err) {
     return <div>error!</div>;
