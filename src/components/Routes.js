@@ -9,6 +9,7 @@ import Players from "./Players";
 import Home from "./Home";
 import Profile from "./Profile";
 import GamePage from "./GamePage"
+import Lobby from "./Lobby"
 
 export default function Routes() {
   const [user, initialising, error] = useAuthState(fire.auth());
@@ -32,6 +33,7 @@ export default function Routes() {
     <Switch>
       {user ? (
         <Switch>
+          <Route path="/games/:gameId/:sessionId" component={Lobby} />
           <Route exact path="/" render={props => <Home userId={user.uid} {...props} />} />
           <Route path="/players" component={Players} />
           <Route path="/profile" render={props => <Profile userId={user.uid} {...props} />} />
