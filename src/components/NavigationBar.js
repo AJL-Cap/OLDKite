@@ -29,7 +29,7 @@ export default function NavigationBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {user ? (
-            <Nav classname="ml-auto">
+            <Nav className="ml-auto">
               <Nav.Item>
                 <Nav.Link href="/">Home</Nav.Link>
               </Nav.Item>
@@ -42,7 +42,7 @@ export default function NavigationBar() {
               <button onClick={signOut}>Sign out</button>
             </Nav>
           ) : (
-            <Nav classname="ml-auto">
+            <Nav className="ml-auto">
               <Nav.Item>
                 <Nav.Link href="/">Home</Nav.Link>
               </Nav.Item>

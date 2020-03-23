@@ -5,15 +5,18 @@ import fire from "../fire";
 export default function Login(props) {
   const { register, handleSubmit, watch, errors } = useForm();
 
+  const [loginErr, setLoginErr] = useState(null)
+
   const onSubmit = data => {
     fire.auth().signInWithEmailAndPassword(data.email, data.password)
+    .then(() => props.history.push("/"))
     .catch(err => {
-      alert(err.message);
+      setLoginErr(err.message)
       });
-    props.history.push("/");
   };
 
-  //need to display error for wrong email & password combination
+  if (loginErr) return <h1>{loginErr}</h1>
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Log In</h1>

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuthState } from "react-firebase-hooks/auth";
 import fire from "../fire";
 
 export default function SignUp(props) {
   const { register, handleSubmit, errors } = useForm();
 
-  //thinking of using this for displaying error..:
   const [signupErr, setSignupErr] = useState(null);
 
   const [image, setImage] = useState(null)
@@ -27,13 +25,12 @@ export default function SignUp(props) {
         props.history.push("/");
       })
       .catch(err => {
-        alert(err.message);
-        //for now, using alert. but need to figure out how to display err.message on render instead
-        props.history.push("/signUp");
+        setSignupErr(err.message)
       });
   };
 
-  //remember: need to disaply error message for existing email or invalid email format
+  if (signupErr) return <h1>{signupErr}</h1>
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Sign Up</h1>
@@ -58,8 +55,9 @@ export default function SignUp(props) {
         type="text"
         placeholder="Ex: Game lover"
         name="nickname"
-        ref={register}
+        ref={register({ required: true, minLength: 3 })}
       />
+      {errors.nickname && <p>Must be at least 3 characters long</p>}
 
       <label htmlFor="profilePic">Profile Picture</label>
       <input
