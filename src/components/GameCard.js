@@ -18,14 +18,9 @@ const GameCard = props => {
       code: code,
       gameId: gameId,
       status: "waiting",
-      players: { [uid]: { host: true } }
+      players: { [uid]: { host: true, points: 0 } }
     });
-    const location = {
-      pathname: `games/${code}`,
-      state: {host: true}
-    }
-    history.push(location);
-
+    history.push(`games/${code}`);
   };
 
   return (

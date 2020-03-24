@@ -21,11 +21,7 @@ const RoomCodeSubmit = props => {
       const { code, players } = room[1]; // destructuring the data that came with the initial object
       const playerCopy = { ...players };
       sessionRef.set({ ...playerCopy, [uid]: { points: 0 } }); // setting session players in the db to the old players plus the new one
-      const location = {
-        pathname: `/games/${code}`,
-        state: {host: false}
-      }
-      history.push(location); // redirecting to the game page
+      history.push(`/games/${code}`); // redirecting to the game page
     }
   }, [history, session, uid]);
 

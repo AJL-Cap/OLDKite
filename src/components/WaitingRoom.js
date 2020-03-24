@@ -9,11 +9,6 @@ const db = fire.database();
 const gameSessions = db.ref("gameSessions");
 
 const WaitingRoom = props => {
-  //must use an if statement since it's undefined for wrong room codes
-  let host
-  if (props.location.state) {
-    host = props.location.state
-  }
   const code = props.match.params.code
   //getting that session info
   const [sessionSnapshot, sessionLoading, sessionError] = useObjectVal(
@@ -56,7 +51,7 @@ const WaitingRoom = props => {
             </div>
             <div className="row">
               {players.map(player => (
-                <SessionPlayer player={player} key={player} host={host}/>
+                <SessionPlayer player={player} key={player}/>
               ))}
             </div>
             <div className="row justify-content-center">
