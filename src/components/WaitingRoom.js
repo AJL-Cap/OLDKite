@@ -1,7 +1,7 @@
 import React from "react";
 import fire from "../fire";
 import { useObjectVal } from "react-firebase-hooks/database";
-import SessionPlayer from "./sessionPlayers";
+import SessionPlayer from "./SessionPlayers";
 import { Button } from "react-bootstrap";
 import NotFound from "./NotFound";
 
@@ -9,15 +9,23 @@ const db = fire.database();
 const gameSessions = db.ref("gameSessions");
 
 const WaitingRoom = props => {
+  //must use an if statement since it's undefined for wrong room codes
+  let host
+  if (props.location.state) {
+    host = props.location.state
+  }
+  const code = props.match.params.code
   //getting that session info
   const [sessionSnapshot, sessionLoading, sessionError] = useObjectVal(
-    gameSessions.orderByChild("code").equalTo(props.match.params.code)
+    gameSessions.orderByChild("code").equalTo(code)
   );
+
   if (sessionLoading) return "";
   if (sessionError) return "Error";
   if (!sessionSnapshot) return <NotFound />;
-  console.log(sessionSnapshot);
+
   let session = Object.keys(sessionSnapshot);
+
   //back to lobby button functionality if a user is trying to access a game they're not in.
   const handleClick = () => {
     //updating that session status to playing
@@ -27,12 +35,13 @@ const WaitingRoom = props => {
       else console.log("success");
       //still need send to the playing game component
       props.history.push(
-        `/games/${props.match.params.code}/${sessionSnapshot[session].gameId}`
+        `/games/${code}/${sessionSnapshot[session].gameId}`
       );
     });
   };
   //getting players from the session
   let players = Object.keys(sessionSnapshot[session].players);
+
   return (
     <>
       {players.includes(`${props.userId}`) ? (
@@ -47,7 +56,7 @@ const WaitingRoom = props => {
             </div>
             <div className="row">
               {players.map(player => (
-                <SessionPlayer player={player} key={player} />
+                <SessionPlayer player={player} key={player} host={host}/>
               ))}
             </div>
             <div className="row justify-content-center">

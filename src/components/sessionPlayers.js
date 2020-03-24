@@ -7,6 +7,7 @@ const db = fire.database();
 const playerRef = db.ref("players");
 
 const SessionPlayer = props => {
+  console.log(props)
   const [playerSnapshot, playerLoading, playerError] = useObject(
     playerRef.child(props.player)
   );
@@ -21,6 +22,7 @@ const SessionPlayer = props => {
           <Card.Img variant="top" src="" />
         )}
         <Card.Body>
+        {props.host && <h1>Host</h1>}
           <Card.Title>{playerSnapshot.val().nickname}</Card.Title>
         </Card.Body>
       </Card>

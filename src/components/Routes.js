@@ -11,7 +11,7 @@ import GamePage from "./GamePage";
 import WaitingRoom from "./WaitingRoom";
 import NotFound from "./NotFound";
 import Loading from "./Loading";
-import NHIE from "./NHIE";
+import NHIE from "./NHIE/NHIE";
 
 export default function Routes() {
   const [user, initialising, error] = useAuthState(fire.auth());
@@ -45,7 +45,8 @@ export default function Routes() {
             path="/profile"
             render={props => <Profile userId={user.uid} {...props} />}
           />
-          <Route exact path="/games" component={GamePage} />
+          <Route exact path="/games"  render={props => <GamePage userId={user.uid} {...props} />}
+          />
           <Route
             exact
             path="/games/:code"
