@@ -1,7 +1,7 @@
 import React from "react";
 import fire from "../fire";
 import { useObjectVal } from "react-firebase-hooks/database";
-import SessionPlayer from "./sessionPlayers";
+import SessionPlayer from "./SessionPlayers";
 import { Button } from "react-bootstrap";
 import NotFound from "./NotFound";
 
@@ -16,22 +16,23 @@ const WaitingRoom = props => {
   if (sessionLoading) return "";
   if (sessionError) return "Error";
   if (!sessionSnapshot) return <NotFound />;
-  console.log(sessionSnapshot);
+  //getting the sessionID key
   let session = Object.keys(sessionSnapshot);
-  //back to lobby button functionality if a user is trying to access a game they're not in.
+  //start game button
   const handleClick = () => {
     //updating that session status to playing
     gameSessions.child(session[0]).update({ status: "playing" }, function(err) {
       //error handling
       if (err) console.log("error switching game to playing");
       else console.log("success");
-      //still need send to the playing game component
-      props.history.push(
-        `/games/${props.match.params.code}/${sessionSnapshot[session].gameId}`
-      );
+      //send to the playing game component
+      props.history.push({
+        pathname: `/games/${props.match.params.code}/${sessionSnapshot[session].gameId}`,
+        state: { session }
+      });
     });
   };
-  //getting players from the session
+  //getting player ids from the session
   let players = Object.keys(sessionSnapshot[session].players);
   return (
     <>

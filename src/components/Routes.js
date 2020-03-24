@@ -11,7 +11,7 @@ import GamePage from "./GamePage";
 import WaitingRoom from "./WaitingRoom";
 import NotFound from "./NotFound";
 import Loading from "./Loading";
-import NHIE from "./NHIE";
+import NHIE from "./NHIE/NHIE";
 
 export default function Routes() {
   const [user, initialising, error] = useAuthState(fire.auth());
