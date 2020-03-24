@@ -9,7 +9,7 @@ const db = fire.database();
 const gameSessions = db.ref("gameSessions");
 
 const WaitingRoom = props => {
-  const code = props.match.params.code
+  const code = props.match.params.code;
   //getting that session info
   const [sessionSnapshot, sessionLoading, sessionError] = useObjectVal(
     gameSessions.orderByChild("code").equalTo(code)
@@ -35,6 +35,7 @@ const WaitingRoom = props => {
       });
     });
   };
+
   //getting players from the session
   let players = Object.keys(sessionSnapshot[session].players);
 
@@ -52,7 +53,7 @@ const WaitingRoom = props => {
             </div>
             <div className="row">
               {players.map(player => (
-                <SessionPlayer player={player} key={player}/>
+                <SessionPlayer player={player} key={player} />
               ))}
             </div>
             <div className="row justify-content-center">
