@@ -4,18 +4,16 @@ import { useList } from "react-firebase-hooks/database";
 import GameCard from "./GameCard";
 import RoomCodeForm from "./RoomCodeForm";
 import { Container, Row, Col } from "react-bootstrap";
-import { useAuthState } from "react-firebase-hooks/auth";
-import firebase from "firebase";
 
 const db = fire.database();
 const gamesRef = db.ref("games");
 
 const GamePage = props => {
-  const [user, loadingUser, errorUser] = useAuthState(firebase.auth());
+  const {userId, history} = props
   const [games, loading, error] = useList(gamesRef);
 
-  if (loading || loadingUser) return "";
-  if (error || errorUser) return <p>Error</p>;
+  if (loading) return "";
+  if (error) return <p>Error</p>;
 
   return (
     <div>
@@ -30,13 +28,13 @@ const GamePage = props => {
                 key={game.key}
                 gameRef={game.ref}
                 gameId={game.key}
-                uid={user.uid}
-                history={props.history}
+                uid={userId}
+                history={history}
               />
             ))}
           </Col>
           <Col>
-            <RoomCodeForm uid={user.uid} history={props.history} />
+            <RoomCodeForm uid={userId} history={history} />
           </Col>
         </Row>
       </Container>

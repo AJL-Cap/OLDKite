@@ -12,6 +12,7 @@ const SessionPlayer = props => {
   );
   if (playerLoading) return "";
   if (playerError) return "Error";
+
   return (
     <div className="m-3">
       <Card style={{ width: "18rem" }} bg="dark" text="light">

@@ -9,10 +9,12 @@ const db = fire.database();
 const gameSessions = db.ref("gameSessions");
 
 const WaitingRoom = props => {
+  const code = props.match.params.code;
   //getting that session info
   const [sessionSnapshot, sessionLoading, sessionError] = useObjectVal(
-    gameSessions.orderByChild("code").equalTo(props.match.params.code)
+    gameSessions.orderByChild("code").equalTo(code)
   );
+
   if (sessionLoading) return "";
   if (sessionError) return "Error";
   if (!sessionSnapshot) return <NotFound />;
@@ -34,6 +36,7 @@ const WaitingRoom = props => {
   };
   //getting player ids from the session
   let players = Object.keys(sessionSnapshot[session].players);
+
   return (
     <>
       {players.includes(`${props.userId}`) ? (

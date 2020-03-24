@@ -45,7 +45,8 @@ export default function Routes() {
             path="/profile"
             render={props => <Profile userId={user.uid} {...props} />}
           />
-          <Route exact path="/games" component={GamePage} />
+          <Route exact path="/games"  render={props => <GamePage userId={user.uid} {...props} />}
+          />
           <Route
             exact
             path="/games/:code"
