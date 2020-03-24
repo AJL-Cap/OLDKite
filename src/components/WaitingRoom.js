@@ -29,9 +29,10 @@ const WaitingRoom = props => {
       if (err) console.log("error switching game to playing");
       else console.log("success");
       //still need send to the playing game component
-      props.history.push(
-        `/games/${code}/${sessionSnapshot[session].gameId}`
-      );
+      props.history.push({
+        pathname: `/games/${props.match.params.code}/${sessionSnapshot[session].gameId}`,
+        state: { session }
+      });
     });
   };
   //getting players from the session
